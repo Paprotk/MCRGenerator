@@ -223,27 +223,9 @@
         -webkit-backdrop-filter: blur(5px);
     }
 
-    .modal-content {
-        background-color: #1e1e1e;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #333;
-        text-align: center;
-        width: 250px;
+    #alert-modal.hide {
+        animation: fadeOut 0.3s ease forwards;
     }
-
-    #alert-ok-btn {
-        margin-top: 15px;
-        padding: 10px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        width: 100%;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    #alert-ok-btn:hover { background-color: #0056b3; }
 
     /* Info Image Modal */
     #info-modal {
@@ -265,6 +247,32 @@
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
     }
+
+    #info-modal.hide {
+        animation: fadeOut 0.3s ease forwards;
+    }
+
+    .modal-content {
+        background-color: #1e1e1e;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #333;
+        text-align: center;
+        width: 250px;
+    }
+
+    #alert-ok-btn {
+        margin-top: 15px;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        width: 100%;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #alert-ok-btn:hover { background-color: #0056b3; }
 
     .info-modal-content {
         background-color: #1e1e1e;
@@ -298,6 +306,11 @@
     @keyframes fadeIn {
         from { opacity: 0; } 
         to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
     }
 </style>
 </head>
@@ -358,7 +371,7 @@
 <div id="info-modal">
     <div class="info-modal-content">
         <img src="https://raw.githubusercontent.com/Paprotk/MCRGenerator/refs/heads/main/image.png" alt="Rows and Columns Explanation" class="info-image">
-        <p>Rows represent the horizontal count (3-9)<br>Columns represent the vertical count (1-9)</p>
+        <p>Rows represent the vertical count (3-9)<br>Columns represent the horizontal count (1-9)</p>
         <button id="info-ok-btn">OK</button>
     </div>
 </div>
@@ -455,21 +468,31 @@ async function loadTemplate() {
 function showAlert(msg) {
     const modal = document.getElementById("alert-modal");
     document.getElementById("alert-message").textContent = msg;
+    modal.classList.remove('hide');
     modal.classList.add("show");
     modal.style.display = "flex";
     document.getElementById("alert-ok-btn").onclick = () => {
-        modal.style.display = "none";
-        modal.classList.remove("show");
+        modal.classList.remove('show');
+        modal.classList.add('hide');
+        setTimeout(() => {
+            modal.style.display = "none";
+            modal.classList.remove('hide');
+        }, 300);
     };
 }
 
 function showInfo() {
     const modal = document.getElementById("info-modal");
+    modal.classList.remove('hide');
     modal.classList.add("show");
     modal.style.display = "flex";
     document.getElementById("info-ok-btn").onclick = () => {
-        modal.style.display = "none";
-        modal.classList.remove("show");
+        modal.classList.remove('show');
+        modal.classList.add('hide');
+        setTimeout(() => {
+            modal.style.display = "none";
+            modal.classList.remove('hide');
+        }, 300);
     };
 }
 
@@ -515,5 +538,4 @@ async function generate() {
 </script>
 
 </body>
-
 </html>
